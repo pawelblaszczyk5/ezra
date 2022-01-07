@@ -1,9 +1,9 @@
-const path = require("path");
-const { createRequestHandler } = require("@remix-run/netlify");
+const path = require('path');
+const { createRequestHandler } = require('@remix-run/netlify');
 
-const BUILD_DIR = path.join(process.cwd(), "netlify");
+const BUILD_DIR = path.join(process.cwd(), 'netlify');
 
-function purgeRequireCache() {
+const purgeRequireCache = () => {
   // purge require cache on requests for "server side HMR" this won't let
   // you have in-memory objects between requests in development,
   // netlify typically does this for you, but we've found it to be hit or
@@ -14,15 +14,15 @@ function purgeRequireCache() {
       delete require.cache[key];
     }
   }
-}
+};
 
 exports.handler =
-  process.env.NODE_ENV === "production"
-    ? createRequestHandler({ build: require("./build") })
+  process.env.NODE_ENV === 'production'
+    ? createRequestHandler({ build: require('./build') })
     : (event, context) => {
         purgeRequireCache();
-        return createRequestHandler({ build: require("./build") })(
+        return createRequestHandler({ build: require('./build') })(
           event,
-          context
+          context,
         );
       };

@@ -1,5 +1,10 @@
+# Base stuff
 node_modules
+.env
+
+# Build artifacts
 /.cache
 /netlify/functions/server/build
 /public/build
 /.netlify
+/app/index.css
