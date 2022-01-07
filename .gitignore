@@ -4,10 +4,13 @@
 
 # Build artifacts
 /.cache
-/netlify/functions/server/build
+/build
+/dist
 /public/build
-/.netlify
 /app/index.css
+
+# miniflare
+/.mf
 
 # Test related
 /coverage

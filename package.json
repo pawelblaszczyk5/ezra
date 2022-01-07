@@ -6,17 +6,21 @@
   "scripts": {
     "build": "npm run build:css && remix build",
     "build:css": "postcss app/styles/index.css -o app/index.css --env production",
-    "dev": "concurrently \"npm run dev:css\" \"cross-env NODE_ENV=development netlify dev\"",
+    "build:worker": "esbuild --define:process.env.NODE_ENV='\"production\"' --minify --bundle --sourcemap --outdir=dist ./worker",
+    "dev": "concurrently \"npm run dev:css\" \"remix watch\" \"npm run dev:miniflare\"",
     "dev:css": "postcss app/styles/index.css -o app/index.css --w",
+    "dev:worker": "esbuild --define:process.env.NODE_ENV='\"development\"' --bundle --sourcemap --outdir=dist ./worker",
+    "dev:miniflare": "miniflare --build-command \"npm run dev:worker\" --watch",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx ./app",
     "lint:ci": "eslint --ext .ts,.tsx,.js,.jsx ./app --max-warnings 0",
     "format": "prettier --write \"./app/**/*.{js,jsx,ts,tsx,html,css,json}\"",
-    "postinstall": "remix setup node",
-    "test": "jest --passWithNoTests"
+    "postinstall": "remix setup cloudflare-workers",
+    "test": "jest --passWithNoTests",
+    "deploy": "npm run build && wrangler publish"
   },
   "dependencies": {
     "@netlify/functions": "^0.10.0",
-    "@remix-run/netlify": "^1.1.1",
+    "@remix-run/cloudflare-workers": "^1.1.1",
     "@remix-run/react": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -52,10 +56,14 @@
     "postcss-cli": "^9.1.0",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.0.11",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "@cloudflare/workers-types": "^2.2.2",
+    "esbuild": "0.13.14",
+    "miniflare": "2.0.0-next.3"
   },
   "engines": {
     "node": "=16"
   },
+  "main": "dist/worker.js",
   "sideEffects": false
 }
