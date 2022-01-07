@@ -9,6 +9,7 @@ const handleRequest = (
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) => {
+  // eslint-disable-next-line testing-library/render-result-naming-convention
   const markup = renderToString(
     <RemixServer context={remixContext} url={request.url} />,
   );
