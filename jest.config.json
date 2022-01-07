@@ -1,0 +1,14 @@
+{
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+  "collectCoverageFrom": ["<rootDir>/app/lib/**/*.ts"],
+  "coveragePathIgnorePatterns": ["<rootDir>/app/lib/model/*"],
+  "coverageProvider": "v8",
+  "moduleNameMapper": {
+    "~/(.*)": "<rootDir>/app/$1"
+  },
+  "transform": {
+    ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+    "\\.[jt]sx?$": "babel-jest"
+  }
+}

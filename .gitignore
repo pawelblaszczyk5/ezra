@@ -1,5 +1,5 @@
 # Base stuff
-node_modules
+/node_modules
 .env
 
 # Build artifacts
@@ -8,3 +8,6 @@ node_modules
 /public/build
 /.netlify
 /app/index.css
+
+# Test related
+/coverage
