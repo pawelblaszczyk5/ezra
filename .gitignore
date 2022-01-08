@@ -9,8 +9,11 @@
 /public/build
 /app/index.css
 
-# miniflare
+# Miniflare
 /.mf
 
 # Test related
 /coverage
+
+# Storybook output
+/storybook-static
