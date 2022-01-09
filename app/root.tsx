@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
 } from 'remix';
 import styles from '~/index.css';
+import { ThemeSetter } from '~/lib/components/ThemeSetter';
 
 export const meta: MetaFunction = () => {
   return { title: 'Ezra - your best app' };
@@ -19,14 +20,16 @@ export const links: LinksFunction = () => {
 };
 
 const App = () => (
-  <html lang="en">
+  // Supressing warning because of adding class in ThemeSetter
+  <html lang="en" suppressHydrationWarning>
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <ThemeSetter />
       <Meta />
       <Links />
     </head>
-    <body className="dark">
+    <body className="bg-slate-100 dark:bg-slate-700">
       <Outlet />
       <ScrollRestoration />
       <Scripts />
