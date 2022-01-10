@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run dev:css\" \"remix watch\" \"npm run dev:miniflare\"",
     "dev:css": "postcss app/styles/index.css -o app/index.css --w",
     "dev:worker": "esbuild --define:process.env.NODE_ENV='\"development\"' --bundle --sourcemap --outdir=dist ./worker",
-    "dev:miniflare": "miniflare --build-command \"npm run dev:worker\" --watch",
+    "dev:miniflare": "miniflare --kv-persist --build-command \"npm run dev:worker\" --watch",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx ./app",
     "lint:ci": "eslint --ext .ts,.tsx,.js,.jsx ./app --max-warnings 0",
     "format": "prettier --write \"./app/**/*.{js,jsx,ts,tsx,html,css,json}\"",
