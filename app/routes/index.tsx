@@ -1,7 +1,5 @@
-import { Button } from '~/lib/components/Button';
-
 const Index = () => {
-  return <Button />;
+  return <h1>Hello world</h1>;
 };
 
 export default Index;

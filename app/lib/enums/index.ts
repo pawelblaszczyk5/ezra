@@ -1,1 +1,5 @@
-export { Theme } from '~/lib/enums/Theme';
+export { Theme } from '~/lib/enums/theme';
+export {
+  AuthorizationType,
+  isAuthorizationType,
+} from '~/lib/enums/authorizationType';
