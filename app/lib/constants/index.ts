@@ -1,1 +1,1 @@
-export { supabaseClient } from '~/lib/constants/supabase';
+export { ACCESS_TOKEN, REFRESH_TOKEN } from '~/lib/constants/session';

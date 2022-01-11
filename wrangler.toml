@@ -7,6 +7,10 @@ route = ""
 workers_dev = true
 compatibility_date = "2022-01-07"
 
+kv_namespaces = [ 
+  { binding = "SESSIONS_KV", id = "bae6074d66fe4ac9bb441aebb1a559bc" }
+]
+
 [site]
 bucket = "./public"
 entry-point = "."
@@ -17,3 +21,8 @@ watch_dir = "build/index.js"
 
 [build.upload]
 format="service-worker"
+
+# [secrets]
+# SUPABASE_PROJECT_URL
+# SUPABASE_PROJECT_ANON_KEY
+# COOKIE_SECRET

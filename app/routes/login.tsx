@@ -1,10 +1,19 @@
-import type { ActionFunction } from 'remix';
+import type { ActionFunction, LoaderFunction } from 'remix';
 import type { CustomError } from '~/lib/model';
 
 import { useActionData, redirect, Form } from 'remix';
 import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
 import { createError } from '~/lib/helpers';
-import { supabaseClient } from '~/lib/constants';
+import { commitSession, getSession, supabaseClient } from '~/lib/helpers';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '~/lib/constants';
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getSession(request.headers.get('cookie'));
+
+  console.log(session.get(ACCESS_TOKEN));
+
+  return null;
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -28,41 +37,36 @@ export const action: ActionFunction = async ({ request }) => {
         return createError('Fill both fields and submit form again', 400);
       }
 
-      const { session, error } = await supabaseClient.auth.signIn({
-        email,
-        password,
-      });
+      const { data: supabaseSession, error } =
+        await supabaseClient.auth.api.signInWithEmail(email, password);
 
       if (error) {
         return createError(error.message, error.status);
       }
 
-      if (!session) {
+      if (!supabaseSession) {
         return createError('Something went wrong, please try again', 500);
       }
 
-      const { access_token, refresh_token } = session;
+      const { access_token, refresh_token } = supabaseSession;
+      const session = await getSession(request.headers.get('cookie'));
 
-      return redirect('/app');
+      session.set(ACCESS_TOKEN, access_token);
+      session.set(REFRESH_TOKEN, refresh_token);
+
+      return redirect('/app', {
+        headers: {
+          'Set-Cookie': await commitSession(session),
+        },
+      });
     }
 
     case AuthorizationType.GITHUB: {
-      const { error, url } = await supabaseClient.auth.signIn(
-        {
-          provider: 'github',
-        },
-        {
-          redirectTo: `${new URL(request.url).origin}/authorize`,
-        },
-      );
+      const url = supabaseClient.auth.api.getUrlForProvider('github', {
+        redirectTo: `${new URL(request.url).origin}/authorize`,
+      });
 
-      if (error) {
-        return createError(error.message, error.status);
-      }
-
-      if (!url) {
-        return createError('Something went wrong, please try again', 500);
-      }
+      console.log(url);
 
       return redirect(url);
     }
