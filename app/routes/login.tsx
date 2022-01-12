@@ -1,16 +1,16 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
-import type { CustomError } from '~/lib/model';
+import type { CustomError, User } from '~/lib/model';
 
 import { useActionData, redirect, Form } from 'remix';
 import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
 import { createError } from '~/lib/helpers';
 import { commitSession, getSession, supabaseClient } from '~/lib/helpers';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '~/lib/constants';
+import { USER } from '~/lib/constants';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('cookie'));
 
-  console.log(session.get(ACCESS_TOKEN));
+  console.log(session.get(USER));
 
   return null;
 };
@@ -48,11 +48,15 @@ export const action: ActionFunction = async ({ request }) => {
         return createError('Something went wrong, please try again', 500);
       }
 
-      const { access_token, refresh_token } = supabaseSession;
       const session = await getSession(request.headers.get('cookie'));
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        supabaseSession;
+      const user: User = {
+        accessToken,
+        refreshToken,
+      };
 
-      session.set(ACCESS_TOKEN, access_token);
-      session.set(REFRESH_TOKEN, refresh_token);
+      session.set(USER, user);
 
       return redirect('/app', {
         headers: {
@@ -65,8 +69,6 @@ export const action: ActionFunction = async ({ request }) => {
       const url = supabaseClient.auth.api.getUrlForProvider('github', {
         redirectTo: `${new URL(request.url).origin}/authorize`,
       });
-
-      console.log(url);
 
       return redirect(url);
     }
