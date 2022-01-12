@@ -29,7 +29,7 @@ const App = () => (
       <Meta />
       <Links />
     </head>
-    <body className="bg-slate-100 dark:bg-slate-700">
+    <body className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-100">
       <Outlet />
       <ScrollRestoration />
       <Scripts />
