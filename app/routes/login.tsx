@@ -10,6 +10,10 @@ import { USER } from '~/lib/constants';
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('cookie'));
 
+  if (session.get(USER)) {
+    return redirect('/app');
+  }
+
   console.log(session.get(USER));
 
   return null;
