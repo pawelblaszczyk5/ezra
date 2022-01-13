@@ -17,5 +17,6 @@ export const isUserAuthenticated = async (
 ): Promise<boolean> => {
   const session = await getSession(request.headers.get('cookie'));
 
+  // TODO - handling various scenarios, checking is token proper etc.
   return Boolean(session.get(USER));
 };
