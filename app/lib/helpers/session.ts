@@ -1,4 +1,5 @@
 import { createCloudflareKVSessionStorage } from 'remix';
+import { USER } from '~/lib/constants';
 
 export const { getSession, commitSession, destroySession } =
   createCloudflareKVSessionStorage({
@@ -10,3 +11,11 @@ export const { getSession, commitSession, destroySession } =
     },
     kv: SESSIONS_KV,
   });
+
+export const isUserAuthenticated = async (
+  request: Request,
+): Promise<boolean> => {
+  const session = await getSession(request.headers.get('cookie'));
+
+  return Boolean(session.get(USER));
+};

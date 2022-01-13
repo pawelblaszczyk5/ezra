@@ -4,4 +4,5 @@ export {
   getSession,
   commitSession,
   destroySession,
+  isUserAuthenticated,
 } from '~/lib/helpers/session';

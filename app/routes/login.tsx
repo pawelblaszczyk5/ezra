@@ -4,17 +4,18 @@ import type { CustomError, User } from '~/lib/model';
 import { useActionData, redirect, Form } from 'remix';
 import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
 import { createError } from '~/lib/helpers';
-import { commitSession, getSession, supabaseClient } from '~/lib/helpers';
+import {
+  commitSession,
+  getSession,
+  supabaseClient,
+  isUserAuthenticated,
+} from '~/lib/helpers';
 import { USER } from '~/lib/constants';
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('cookie'));
-
-  if (session.get(USER)) {
+  if (await isUserAuthenticated(request)) {
     return redirect('/app');
   }
-
-  console.log(session.get(USER));
 
   return null;
 };
