@@ -20,5 +20,8 @@ export const getProvider = (
     case AuthorizationType.SPOTIFY: {
       return 'spotify';
     }
+    case AuthorizationType.GITLAB: {
+      return 'gitlab';
+    }
   }
 };

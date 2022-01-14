@@ -71,8 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
       });
     }
 
-    case AuthorizationType.GITHUB:
-    case AuthorizationType.SPOTIFY: {
+    default: {
       const provider: Provider = getProvider(type);
 
       const url = supabaseClient.auth.api.getUrlForProvider(provider, {
@@ -114,6 +113,14 @@ const Login = () => {
       >
         <button name="type" value={AuthorizationType.SPOTIFY}>
           Login with Spotify
+        </button>
+      </Form>
+      <Form
+        method="post"
+        className="flex flex-col max-w-3xl items-center justify-center mx-auto"
+      >
+        <button name="type" value={AuthorizationType.GITLAB}>
+          Login with GitLab
         </button>
       </Form>
       {error && <p>{error.message}</p>}
