@@ -1,7 +1,7 @@
 export const enum AuthorizationType {
   EMAIL = 'EMAIL',
   GITHUB = 'GITHUB',
-  TWITTER = 'TWITTER',
+  SPOTIFY = 'SPOTIFY',
 }
 
 export const isAuthorizationType = (
@@ -11,6 +11,6 @@ export const isAuthorizationType = (
     typeof argument === 'string' &&
     (argument === AuthorizationType.EMAIL ||
       argument === AuthorizationType.GITHUB ||
-      argument === AuthorizationType.TWITTER)
+      argument === AuthorizationType.SPOTIFY)
   );
 };

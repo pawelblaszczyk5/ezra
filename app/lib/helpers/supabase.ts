@@ -17,8 +17,8 @@ export const getProvider = (
     case AuthorizationType.GITHUB: {
       return 'github';
     }
-    case AuthorizationType.TWITTER: {
-      return 'twitter';
+    case AuthorizationType.SPOTIFY: {
+      return 'spotify';
     }
   }
 };

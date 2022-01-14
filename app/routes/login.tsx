@@ -72,7 +72,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     case AuthorizationType.GITHUB:
-    case AuthorizationType.TWITTER: {
+    case AuthorizationType.SPOTIFY: {
       const provider: Provider = getProvider(type);
 
       const url = supabaseClient.auth.api.getUrlForProvider(provider, {
@@ -112,8 +112,8 @@ const Login = () => {
         method="post"
         className="flex flex-col max-w-3xl items-center justify-center mx-auto"
       >
-        <button name="type" value={AuthorizationType.TWITTER}>
-          Login with Twitter
+        <button name="type" value={AuthorizationType.SPOTIFY}>
+          Login with Spotify
         </button>
       </Form>
       {error && <p>{error.message}</p>}
