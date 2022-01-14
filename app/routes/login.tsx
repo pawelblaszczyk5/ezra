@@ -1,5 +1,6 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
 import type { CustomError, User } from '~/lib/model';
+import type { Provider } from '@supabase/supabase-js';
 
 import { useActionData, redirect, Form } from 'remix';
 import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
@@ -11,7 +12,6 @@ import {
   isUserAuthenticated,
 } from '~/lib/helpers';
 import { USER } from '~/lib/constants';
-import type { Provider } from '@supabase/supabase-js';
 
 export const loader: LoaderFunction = async ({ request }) => {
   if (await isUserAuthenticated(request)) {
