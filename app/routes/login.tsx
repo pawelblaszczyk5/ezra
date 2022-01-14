@@ -3,7 +3,7 @@ import type { CustomError, User } from '~/lib/model';
 
 import { useActionData, redirect, Form } from 'remix';
 import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
-import { createError } from '~/lib/helpers';
+import { createError, getProvider } from '~/lib/helpers';
 import {
   commitSession,
   getSession,
@@ -11,6 +11,7 @@ import {
   isUserAuthenticated,
 } from '~/lib/helpers';
 import { USER } from '~/lib/constants';
+import type { Provider } from '@supabase/supabase-js';
 
 export const loader: LoaderFunction = async ({ request }) => {
   if (await isUserAuthenticated(request)) {
@@ -70,8 +71,11 @@ export const action: ActionFunction = async ({ request }) => {
       });
     }
 
-    case AuthorizationType.GITHUB: {
-      const url = supabaseClient.auth.api.getUrlForProvider('github', {
+    case AuthorizationType.GITHUB:
+    case AuthorizationType.TWITTER: {
+      const provider: Provider = getProvider(type);
+
+      const url = supabaseClient.auth.api.getUrlForProvider(provider, {
         redirectTo: `${new URL(request.url).origin}/authorize`,
       });
 
@@ -101,7 +105,15 @@ const Login = () => {
         className="flex flex-col max-w-3xl items-center justify-center mx-auto"
       >
         <button name="type" value={AuthorizationType.GITHUB}>
-          Login with github
+          Login with Github
+        </button>
+      </Form>
+      <Form
+        method="post"
+        className="flex flex-col max-w-3xl items-center justify-center mx-auto"
+      >
+        <button name="type" value={AuthorizationType.TWITTER}>
+          Login with Twitter
         </button>
       </Form>
       {error && <p>{error.message}</p>}

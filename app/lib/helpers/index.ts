@@ -1,5 +1,5 @@
 export { createError } from '~/lib/helpers/createError';
-export { supabaseClient } from '~/lib/helpers/supabase';
+export { supabaseClient, getProvider } from '~/lib/helpers/supabase';
 export {
   getSession,
   commitSession,
