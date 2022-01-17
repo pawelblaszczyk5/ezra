@@ -1,9 +1,9 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
+import type { Message } from '~/lib/model';
+import type { MessageType } from '~/lib/enums';
 
 import { redirect, useActionData, Form } from 'remix';
-import type { MessageType } from '~/lib/enums';
 import { isUserAuthenticated } from '~/lib/helpers';
-import type { Message } from '~/lib/model';
 
 export const loader: LoaderFunction = async ({ request }) => {
   if (await isUserAuthenticated(request)) {

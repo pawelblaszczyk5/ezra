@@ -8,8 +8,9 @@ import {
   isAuthorizationType,
   MessageType,
 } from '~/lib/enums';
-import { createMessage, getProvider } from '~/lib/helpers';
 import {
+  createMessage,
+  getProvider,
   commitSession,
   getSession,
   supabaseClient,
