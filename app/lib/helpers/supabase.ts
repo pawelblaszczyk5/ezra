@@ -6,9 +6,7 @@ export const supabaseClient = createClient(SUPABASE_PROJECT_URL, SUPABASE_PROJEC
   fetch: fetch.bind(globalThis),
 });
 
-export const getProvider = (
-  type: Exclude<AuthorizationType, AuthorizationType.EMAIL>,
-): Provider => {
+export const getProvider = (type: Exclude<AuthorizationType, AuthorizationType.EMAIL>): Provider => {
   switch (type) {
     case AuthorizationType.GITHUB: {
       return 'github';

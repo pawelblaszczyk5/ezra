@@ -9,8 +9,7 @@ interface CreateMessageParams extends Message<MessageType> {
 
 type CreateTypedMessageParams = Omit<CreateMessageParams, 'type'>;
 
-const createMessage = ({ content, status, type }: CreateMessageParams) =>
-  json({ content, type }, { status });
+const createMessage = ({ content, status, type }: CreateMessageParams) => json({ content, type }, { status });
 
 export const createErrorMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.ERROR });

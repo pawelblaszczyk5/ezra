@@ -44,10 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
           status: 400,
         });
 
-      const { data: supabaseSession, error } = await supabaseClient.auth.api.signInWithEmail(
-        email,
-        password,
-      );
+      const { data: supabaseSession, error } = await supabaseClient.auth.api.signInWithEmail(email, password);
 
       if (error)
         return createErrorMessage({
@@ -90,11 +87,7 @@ const Login = () => {
 
   return (
     <>
-      <Form
-        method="post"
-        className="flex flex-col max-w-3xl items-center justify-center mx-auto"
-        noValidate
-      >
+      <Form method="post" className="flex flex-col max-w-3xl items-center justify-center mx-auto" noValidate>
         <input type="email" name="email" required />
         <input type="password" name="password" required />
         <button name="type" value={AuthorizationType.EMAIL}>

@@ -79,11 +79,7 @@ const SignUp = () => {
         <input type="password" name="confirm_password" required />
         <button>Sign Up</button>
       </Form>
-      {message && (
-        <p>
-          {isErrorMessage(message) ? `(Error) ${message.content}` : `(Success) ${message.content}`}
-        </p>
-      )}
+      {message && <p>{isErrorMessage(message) ? `(Error) ${message.content}` : `(Success) ${message.content}`}</p>}
     </>
   );
 };
