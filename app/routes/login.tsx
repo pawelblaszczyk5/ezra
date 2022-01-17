@@ -12,6 +12,8 @@ import {
   getSession,
   supabaseClient,
   isUserAuthenticated,
+  getRedirectURL,
+  createUnexpectedErrorMessage,
 } from '~/lib/helpers';
 import { USER } from '~/lib/constants';
 
@@ -53,11 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
           status: error.status,
         });
 
-      if (!supabaseSession)
-        return createErrorMessage({
-          content: 'Something went wrong, please try again',
-          status: 500,
-        });
+      if (!supabaseSession) return createUnexpectedErrorMessage();
 
       const session = await getSession(request.headers.get('cookie'));
       const { access_token: accessToken, refresh_token: refreshToken } = supabaseSession;
@@ -79,7 +77,7 @@ export const action: ActionFunction = async ({ request }) => {
       const provider: Provider = getProvider(type);
 
       const url = supabaseClient.auth.api.getUrlForProvider(provider, {
-        redirectTo: `${new URL(request.url).origin}/authorize`,
+        redirectTo: getRedirectURL(request),
       });
 
       return redirect(url);

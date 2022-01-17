@@ -23,3 +23,9 @@ export const createSuccessMessage = ({ content, status }: CreateTypedMessagePara
 
 export const createInfoMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.INFO });
+
+export const createUnexpectedErrorMessage = () =>
+  createErrorMessage({
+    content: 'Something went wrong, please try again',
+    status: 500,
+  });

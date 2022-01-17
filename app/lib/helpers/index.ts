@@ -3,8 +3,9 @@ export {
   createInfoMessage,
   createSuccessMessage,
   createWarningMessage,
+  createUnexpectedErrorMessage,
 } from '~/lib/helpers/createMessage';
-export { supabaseClient, getProvider } from '~/lib/helpers/supabase';
+export { supabaseClient, getProvider, getRedirectURL } from '~/lib/helpers/supabase';
 export {
   getSession,
   commitSession,

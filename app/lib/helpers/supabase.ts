@@ -21,3 +21,5 @@ export const getProvider = (
     }
   }
 };
+
+export const getRedirectURL = (request: Request) => `${new URL(request.url).origin}/authorize`;
