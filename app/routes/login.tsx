@@ -1,10 +1,14 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
-import type { CustomError, User } from '~/lib/model';
+import type { Message, User } from '~/lib/model';
 import type { Provider } from '@supabase/supabase-js';
 
 import { useActionData, redirect, Form } from 'remix';
-import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
-import { createError, getProvider } from '~/lib/helpers';
+import {
+  AuthorizationType,
+  isAuthorizationType,
+  MessageType,
+} from '~/lib/enums';
+import { createMessage, getProvider } from '~/lib/helpers';
 import {
   commitSession,
   getSession,
@@ -26,7 +30,11 @@ export const action: ActionFunction = async ({ request }) => {
   const type = formData.get('type');
 
   if (!isAuthorizationType(type)) {
-    return createError('Make sure to submit data using provided form', 400);
+    return createMessage({
+      content: 'Make sure to submit data using provided form',
+      status: 400,
+      type: MessageType.ERROR,
+    });
   }
 
   switch (type) {
@@ -40,18 +48,30 @@ export const action: ActionFunction = async ({ request }) => {
         !password ||
         typeof password !== 'string'
       ) {
-        return createError('Fill both fields and submit form again', 400);
+        return createMessage({
+          content: 'Fill both fields and submit form again',
+          status: 400,
+          type: MessageType.ERROR,
+        });
       }
 
       const { data: supabaseSession, error } =
         await supabaseClient.auth.api.signInWithEmail(email, password);
 
       if (error) {
-        return createError(error.message, error.status);
+        return createMessage({
+          content: error.message,
+          status: error.status,
+          type: MessageType.ERROR,
+        });
       }
 
       if (!supabaseSession) {
-        return createError('Something went wrong, please try again', 500);
+        return createMessage({
+          content: 'Something went wrong, please try again',
+          status: 500,
+          type: MessageType.ERROR,
+        });
       }
 
       const session = await getSession(request.headers.get('cookie'));
@@ -84,7 +104,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 const Login = () => {
-  const error = useActionData<CustomError>();
+  const errorMessage = useActionData<Message<MessageType.ERROR>>();
 
   return (
     <>
@@ -123,7 +143,7 @@ const Login = () => {
           Login with GitLab
         </button>
       </Form>
-      {error && <p>{error.message}</p>}
+      {errorMessage && <p>{errorMessage.content}</p>}
     </>
   );
 };

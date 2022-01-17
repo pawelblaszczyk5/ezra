@@ -1,8 +1,9 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
 
-import { redirect } from 'remix';
-import { Form } from 'remix';
+import { redirect, useActionData, Form } from 'remix';
+import type { MessageType } from '~/lib/enums';
 import { isUserAuthenticated } from '~/lib/helpers';
+import type { Message } from '~/lib/model';
 
 export const loader: LoaderFunction = async ({ request }) => {
   if (await isUserAuthenticated(request)) {
@@ -24,13 +25,18 @@ export const action: ActionFunction = async ({ request }) => {
   return null;
 };
 
-const Register = () => (
-  <Form method="post" noValidate>
-    <input type="email" name="email" required />
-    <input type="password" name="password" required />
-    <input type="password" name="confirm_password" required />
-    <button>Register</button>
-  </Form>
-);
+const SignUp = () => {
+  const message =
+    useActionData<Message<MessageType.ERROR | MessageType.SUCCESS>>();
 
-export default Register;
+  return (
+    <Form method="post" noValidate>
+      <input type="email" name="email" required />
+      <input type="password" name="password" required />
+      <input type="password" name="confirm_password" required />
+      <button>Sign Up</button>
+    </Form>
+  );
+};
+
+export default SignUp;

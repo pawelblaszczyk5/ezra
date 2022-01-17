@@ -1,4 +1,4 @@
-export { createError } from '~/lib/helpers/createError';
+export { createMessage } from '~/lib/helpers/createMessage';
 export { supabaseClient, getProvider } from '~/lib/helpers/supabase';
 export {
   getSession,

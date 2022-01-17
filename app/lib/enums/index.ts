@@ -3,3 +3,4 @@ export {
   AuthorizationType,
   isAuthorizationType,
 } from '~/lib/enums/authorizationType';
+export { MessageType } from '~/lib/enums/messageType';
