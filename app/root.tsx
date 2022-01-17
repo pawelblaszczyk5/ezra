@@ -1,13 +1,6 @@
 import type { LinksFunction, MetaFunction } from 'remix';
 
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from 'remix';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
 import styles from '~/index.css';
 import { ThemeSetter } from '~/lib/components/ThemeSetter';
 

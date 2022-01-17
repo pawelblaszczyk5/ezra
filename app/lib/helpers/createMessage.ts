@@ -12,26 +12,14 @@ type CreateTypedMessageParams = Omit<CreateMessageParams, 'type'>;
 const createMessage = ({ content, status, type }: CreateMessageParams) =>
   json({ content, type }, { status });
 
-export const createErrorMessage = ({
-  content,
-  status,
-}: CreateTypedMessageParams) =>
+export const createErrorMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.ERROR });
 
-export const createWarningMessage = ({
-  content,
-  status,
-}: CreateTypedMessageParams) =>
+export const createWarningMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.WARNING });
 
-export const createSuccessMessage = ({
-  content,
-  status,
-}: CreateTypedMessageParams) =>
+export const createSuccessMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.SUCCESS });
 
-export const createInfoMessage = ({
-  content,
-  status,
-}: CreateTypedMessageParams) =>
+export const createInfoMessage = ({ content, status }: CreateTypedMessageParams) =>
   createMessage({ content, status, type: MessageType.INFO });

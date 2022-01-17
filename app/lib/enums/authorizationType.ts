@@ -5,9 +5,7 @@ export const enum AuthorizationType {
   GITLAB = 'GITLAB',
 }
 
-export const isAuthorizationType = (
-  argument: unknown,
-): argument is AuthorizationType => {
+export const isAuthorizationType = (argument: unknown): argument is AuthorizationType => {
   return (
     typeof argument === 'string' &&
     (argument === AuthorizationType.EMAIL ||
