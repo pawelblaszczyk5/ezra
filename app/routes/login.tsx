@@ -1,15 +1,12 @@
 import type { ActionFunction, LoaderFunction } from 'remix';
 import type { Message, User } from '~/lib/model';
 import type { Provider } from '@supabase/supabase-js';
+import type { MessageType } from '~/lib/enums';
 
 import { useActionData, redirect, Form } from 'remix';
+import { AuthorizationType, isAuthorizationType } from '~/lib/enums';
 import {
-  AuthorizationType,
-  isAuthorizationType,
-  MessageType,
-} from '~/lib/enums';
-import {
-  createMessage,
+  createErrorMessage,
   getProvider,
   commitSession,
   getSession,
@@ -31,10 +28,9 @@ export const action: ActionFunction = async ({ request }) => {
   const type = formData.get('type');
 
   if (!isAuthorizationType(type)) {
-    return createMessage({
+    return createErrorMessage({
       content: 'Make sure to submit data using provided form',
       status: 400,
-      type: MessageType.ERROR,
     });
   }
 
@@ -49,10 +45,9 @@ export const action: ActionFunction = async ({ request }) => {
         !password ||
         typeof password !== 'string'
       ) {
-        return createMessage({
+        return createErrorMessage({
           content: 'Fill both fields and submit form again',
           status: 400,
-          type: MessageType.ERROR,
         });
       }
 
@@ -60,18 +55,16 @@ export const action: ActionFunction = async ({ request }) => {
         await supabaseClient.auth.api.signInWithEmail(email, password);
 
       if (error) {
-        return createMessage({
+        return createErrorMessage({
           content: error.message,
           status: error.status,
-          type: MessageType.ERROR,
         });
       }
 
       if (!supabaseSession) {
-        return createMessage({
+        return createErrorMessage({
           content: 'Something went wrong, please try again',
           status: 500,
-          type: MessageType.ERROR,
         });
       }
 
