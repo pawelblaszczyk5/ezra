@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
 import type { ActionFunction } from 'remix';
+
+import { useEffect } from 'react';
 import { useFetcher } from 'remix';
 
 export const action: ActionFunction = async ({ request }) => {
