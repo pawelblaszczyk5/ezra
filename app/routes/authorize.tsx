@@ -20,6 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
     refreshToken,
   };
 
+  // TODO: Check whether data is proper supabase data
   session.set(USER, user);
 
   return redirect('/app', {

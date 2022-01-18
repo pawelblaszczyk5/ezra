@@ -14,6 +14,6 @@ export const { getSession, commitSession, destroySession } = createCloudflareKVS
 export const isUserAuthenticated = async (request: Request): Promise<boolean> => {
   const session = await getSession(request.headers.get('cookie'));
 
-  // TODO - handling various scenarios, checking is token proper etc.
+  // TODO: handling various scenarios, checking is token proper etc.
   return Boolean(session.get(USER));
 };
