@@ -34,7 +34,7 @@ const App = () => (
       <Meta />
       <Links />
     </head>
-    <body className="font-sans bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100">
+    <body className="bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100">
       <Outlet />
       <ScrollRestoration />
       <Scripts />
