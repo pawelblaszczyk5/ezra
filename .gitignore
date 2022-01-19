@@ -14,3 +14,6 @@
 
 # Test related
 /coverage
+
+# MacOS related
+.DS_Store
