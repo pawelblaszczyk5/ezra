@@ -2,6 +2,7 @@ import type { LinksFunction, MetaFunction } from 'remix';
 
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
 import styles from '~/index.css';
+import fontsStyles from '~/fonts.css';
 import { ThemeSetter } from '~/lib/components/ThemeSetter';
 
 export const meta: MetaFunction = () => {
@@ -9,7 +10,18 @@ export const meta: MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
+  return [
+    { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: fontsStyles },
+    {
+      rel: 'preload',
+      as: 'font',
+      href: '/fonts/manrope-latin-400-normal.woff2',
+      type: 'font/woff2',
+      crossOrigin: 'anonymous',
+    },
+    // TODO: Add more fonts based on usage
+  ];
 };
 
 const App = () => (
@@ -22,7 +34,7 @@ const App = () => (
       <Meta />
       <Links />
     </head>
-    <body className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-100">
+    <body className="font-sans bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100">
       <Outlet />
       <ScrollRestoration />
       <Scripts />

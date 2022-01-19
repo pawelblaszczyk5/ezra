@@ -19,6 +19,7 @@
     "deploy": "npm run build && wrangler publish"
   },
   "dependencies": {
+    "@fontsource/manrope": "^4.5.1",
     "@netlify/functions": "^0.10.0",
     "@remix-run/cloudflare-workers": "^1.1.1",
     "@remix-run/react": "^1.1.1",
