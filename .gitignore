@@ -17,3 +17,6 @@
 
 # MacOS related
 .DS_Store
+
+# Storybook outputs
+/storybook-static
