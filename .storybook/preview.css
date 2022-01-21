@@ -1,0 +1,12 @@
+body,
+.docs-story {
+  background-color: #eaeaea;
+}
+
+body.dark {
+  background-color: #323232;
+}
+
+body.dark .docs-story {
+  background-color: #323232;
+}
